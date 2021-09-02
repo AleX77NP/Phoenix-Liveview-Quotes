@@ -1,0 +1,37 @@
+<h1>Show Quote</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, QuotesWeb.QuoteLive.FormComponent,
+    id: @quote.id,
+    title: @page_title,
+    action: @live_action,
+    quote: @quote,
+    return_to: Routes.quote_show_path(@socket, :show, @quote) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Username:</strong>
+    <%= @quote.username %>
+  </li>
+
+  <li>
+    <strong>Text:</strong>
+    <%= @quote.text %>
+  </li>
+
+  <li>
+    <strong>Likes:</strong>
+    <%= @quote.likes %>
+  </li>
+
+  <li>
+    <strong>Reposts:</strong>
+    <%= @quote.reposts %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.quote_show_path(@socket, :edit, @quote), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.quote_index_path(@socket, :index) %></span>

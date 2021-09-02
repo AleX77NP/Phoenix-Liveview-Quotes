@@ -1,0 +1,30 @@
+<h1>Quotes Timeline</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, QuotesWeb.QuoteLive.FormComponent,
+    id: @quote.id || :new,
+    title: @page_title,
+    action: @live_action,
+    quote: @quote,
+    return_to: Routes.quote_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Text</th>
+      <th>Likes</th>
+      <th>Reposts</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="quotes" phx-update="prepend">
+    <%= for quote <- @quotes do %>
+      <%= live_component @socket, QuotesWeb.QuoteLive.QuoteComponent, id: quote.id, quote: quote %>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Quote", to: Routes.quote_index_path(@socket, :new) %></span>
